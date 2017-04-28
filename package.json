@@ -1,0 +1,32 @@
+{
+  "name": "shrc.js",
+  "version": "1.0.0",
+  "description": "Welcome message for shells",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChalkPE/shrc.js.git"
+  },
+  "keywords": [
+    "bashrc",
+    "zshrc",
+    "shell",
+    "welcome",
+    "message"
+  ],
+  "author": "ChalkPE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChalkPE/shrc.js/issues"
+  },
+  "homepage": "https://github.com/ChalkPE/shrc.js#readme",
+  "devDependencies": {
+    "standard": "^10.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.16.1"
+  }
+}
