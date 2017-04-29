@@ -15,11 +15,11 @@ const getMeal = time =>
   : time <= 1950 ? mealTypes.dinner
   : time <= 2140 ? mealTypes.snack : null
 
-const length = str => str.replace(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g, '22').length
-
 function concat (array, size, filler = ' ') {
   const separator = '♪'
+
   const chunkCount = Math.ceil(array.length / size)
+  const length = str => str.replace(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g, '22').length
 
   const chunks = [...Array(chunkCount)]
     .map((_, i) => array.slice(i * size, ++i * size))
