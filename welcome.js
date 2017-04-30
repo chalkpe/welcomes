@@ -9,9 +9,15 @@ module.exports = async plugins => {
   results.forEach(result => {
     if (result.powerline) powerlines.push(result.powerline)
     if (result.command) {
-      let { input, output } = result.command
+      let { input, params, flags, output } = result.command
       if (!Array.isArray(output)) output = [output]
-      logs.push(`${chalk.bold.green('$')} ${chalk.green(input)}`, ...output)
+
+      let inputs = [chalk.bold.green('$'), chalk.green(input)]
+
+      if (params) inputs.push(...params)
+      if (flags) inputs.push(...flags.map(x => `--${x}`))
+
+      logs.push(inputs.join(' '), ...output)
     }
   })
 
