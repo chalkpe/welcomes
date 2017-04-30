@@ -31,7 +31,7 @@ module.exports = async options => {
 
   return { command: {
     input: 'dimibob',
-    params: params.d,
+    params: [params.d],
     flags: flags.filter(x => x),
     output: table(meals, Math.ceil(meals.length / 2))
   } }

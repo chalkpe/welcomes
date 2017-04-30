@@ -1,29 +1,31 @@
-function table (arr, size, filler = ' ') {
-  const chunkCount = Math.ceil(arr.length / size)
-  const getLength = str => str.replace(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g, '22').length
+const { max, ceil, floor } = Math
+const multibytes = /[가-힣ㄱ-ㅎㅏ-ㅣ]/g
+const maxLength = process.stdout.columns
+
+const space = n => ' '.repeat(n)
+const sum = arr => arr.reduce((a, b) => a + b, 0)
+const len = str => str ? str.replace(multibytes, '22').length : 0
+const pad = (str, n) => space(ceil(n / 2)) + str + space(floor(n / 2))
+
+const table = (arr, size) => {
+  const chunkCount = ceil(arr.length / size)
 
   const chunks = [...Array(chunkCount)]
     .map((_, i) => arr.slice(i * size, ++i * size))
-    .map(c => c.concat(...filler.repeat(size)).slice(0, size))
+    .map(c => c.concat(...space(size)).slice(0, size))
 
-  const lengths = [...Array(size)].map((_, i) =>
-    Math.max(...chunks.map(c => c[i] ? getLength(c[i]) : 0)) + 2)
+  const lengths = [...Array(size)]
+    .map((_, i) => 2 + max(...chunks.map(c => len(c[i]))))
 
-  const max = lengths.reduce((a, b) => a + b) + size >= process.stdout.columns
-  if (max && size > 1) return table(arr, size - 1, filler)
-
-  const padded = chunks.map(c => c.map((str, i) => {
-    const n = (lengths[i] - getLength(str)) / 2
-    const [a, b] = [Math.ceil, Math.floor].map(f => filler.repeat(f(n)))
-
-    return a + str + b
-  }))
+  if (size > 1 && size + sum(lengths) >= maxLength) return table(arr, size - 1)
 
   const border = ([left, filler, centre, right]) =>
     [left, lengths.map(n => filler.repeat(n)).join(centre), right].join('')
 
-  const lines = padded.reduce((res, c, i) =>
-    [...res, border(i ? '├─┼┤' : '┌─┬┐'), [null, ...c, null].join('│')], [])
+  const lines = chunks
+    .map(c => c.map((str, i) => pad(str, lengths[i] - len(str))))
+    .map(c => [null, ...c, null].join('│'))
+    .reduce((res, c, i) => res.concat(border(i ? '├─┼┤' : '┌─┬┐'), c), [])
 
   return lines.concat(border('└─┴┘'))
 }
