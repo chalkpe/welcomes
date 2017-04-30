@@ -1,16 +1,15 @@
+// const fs = require('mz/fs')
 const { max, ceil, floor } = Math
 const multibytes = /[가-힣ㄱ-ㅎㅏ-ㅣ]/g
 const maxLength = process.stdout.columns
 
 const space = n => ' '.repeat(n)
 const sum = arr => arr.reduce((a, b) => a + b, 0)
-const len = str => str ? str.replace(multibytes, '22').length : 0
+const len = str => str ? str.replace(multibytes, '콩콩').length : 0
 const pad = (str, n) => space(ceil(n / 2)) + str + space(floor(n / 2))
 
-const table = (arr, size) => {
-  const chunkCount = ceil(arr.length / size)
-
-  const chunks = [...Array(chunkCount)]
+const table = async (arr, size) => {
+  const chunks = [...Array(ceil(arr.length / size))]
     .map((_, i) => arr.slice(i * size, ++i * size))
     .map(c => c.concat(...space(size)).slice(0, size))
 
@@ -21,6 +20,8 @@ const table = (arr, size) => {
 
   const border = ([left, filler, centre, right]) =>
     [left, lengths.map(n => filler.repeat(n)).join(centre), right].join('')
+
+  // const coloured = await fs.readFile('./assets/favorites.txt')
 
   const lines = chunks
     .map(c => c.map((str, i) => pad(str, lengths[i] - len(str))))

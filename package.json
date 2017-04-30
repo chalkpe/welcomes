@@ -27,6 +27,7 @@
     "standard": "^10.0.2"
   },
   "dependencies": {
-    "axios": "^0.16.1"
+    "axios": "^0.16.1",
+    "mz": "^2.6.0"
   }
 }

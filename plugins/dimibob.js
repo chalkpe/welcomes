@@ -27,7 +27,7 @@ module.exports = async options => {
   const { data } = await axios.get(URL, myOptions)
   if (typeof data !== 'object' || !data[meal]) throw new Error('not found')
 
-  const meals = data[meal].split('/')
+  const meals = data[meal].split(/[ */]/)
 
   return { command: {
     input: 'dimibob',
