@@ -8,7 +8,7 @@ module.exports = argv => {
     style: argv.my.style || null,
     color: argv.my.color || 'white',
     fgColor: argv.my.fgColor || 'black',
-    message: moment(argv.my.moment).format(argv.my.format || 'HH:mm:ss')
+    message: moment().format(argv.my.format || 'HH:mm:ss')
   }
 
   return { powerline }
