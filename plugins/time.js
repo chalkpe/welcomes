@@ -1,7 +1,8 @@
 const moment = require('moment')
 
 module.exports = argv => {
-  if (argv.my.locale) moment.locale(argv.my.locale)
+  const locale = argv.my.locale || argv.locale
+  if (locale) moment.locale(locale)
 
   const powerline = {
     style: argv.my.style || null,

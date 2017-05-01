@@ -19,10 +19,11 @@ module.exports = async argv => {
   let meal = getMeal(now.hours() * 100 + now.minutes())
 
   if (meal) {
-    if (argv.my.ignoreSnack && meal === mealTypes.snack) return {}
+    if (argv.my.ignoreSnack && meal === mealTypes.snack) meal = null
+    else flags.push(meal)
+  }
 
-    flags.push(meal)
-  } else {
+  if (!meal) {
     if (argv.my.onlyToday) return {}
 
     now.add(1, 'day')
@@ -39,22 +40,31 @@ module.exports = async argv => {
   const { data } = await axios(options)
   if (typeof data !== 'object' || !data[meal]) throw new Error('not found')
 
-  const commandOptions = {}
+  const highlights = []
   const list = data[meal].split(/[ */]/).filter(x => x)
 
   if (argv.my.likes) {
     const file = path.resolve(argv.my.likes)
-    const encoding = argv.my.encoding || 'utf-8'
+    const encoding = argv.encoding || 'utf-8'
     const list = (await fs.readFile(file, encoding)).split(os.EOL)
-    commandOptions.highlight = list.map(item => item.trim()).filter(x => x)
+    highlights.push(...list.map(item => item.trim()).filter(x => x))
   }
+
+  const table = [
+    list,
+    Math.ceil(list.length / 2),
+    { list: highlights, color: argv.my.likesColor }
+  ]
 
   const command = {
     input: argv.my.cmd || 'dimibob',
-    output: { table: [list, Math.ceil(list.length / 2)] },
-    params: [options.params.d],
+    output: { table },
     flags: flags.filter(x => x),
-    options: commandOptions
+    params: [
+      argv.my.cmdFormat
+      ? now.format(argv.my.cmdFormat)
+      : options.params.d
+    ]
   }
 
   return { command }

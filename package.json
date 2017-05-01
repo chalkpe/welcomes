@@ -7,25 +7,27 @@
     "test": "standard"
   },
   "bin": {
-    "welcome": "bin/welcome.js"
+    "welcomes": "bin/welcomes.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChalkPE/welcome.js.git"
+    "url": "git+https://github.com/ChalkPE/welcomes.git"
   },
   "keywords": [
     "bashrc",
     "zshrc",
     "shell",
     "welcome",
-    "message"
+    "welcomes",
+    "message",
+    "greetings"
   ],
   "author": "ChalkPE",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ChalkPE/welcome.js/issues"
+    "url": "https://github.com/ChalkPE/welcomes/issues"
   },
-  "homepage": "https://github.com/ChalkPE/welcome.js#readme",
+  "homepage": "https://github.com/ChalkPE/welcomes#readme",
   "devDependencies": {
     "standard": "^10.0.2"
   },

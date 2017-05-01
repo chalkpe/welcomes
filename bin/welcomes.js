@@ -23,5 +23,5 @@ const loadPlugin = plugin => {
 
 Promise.map(argv._, requirePlugin)
   .then(plugins => Promise.map(plugins, loadPlugin))
-  .then(results => welcomes(results))
+  .then(results => welcomes(argv, results))
   .catch(err => argv.dev ? console.error(err) : process.exit(1))
