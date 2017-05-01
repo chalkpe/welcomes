@@ -1,9 +1,13 @@
-const axiosOptions = { timeout: 3000 }
-const welcome = require('./welcome.js')
+const command = require('./lib/command')
+const powerline = require('./lib/powerline')
 
-const plugin = name => require(`./plugins/${name}`)
-const load = (...list) => list.map(name => plugin(name)(axiosOptions))
+module.exports = async results => {
+  const [logs, powerlines] = [[], []]
 
-// const handler = () => process.exit(1)
-const handler = err => console.error(err)
-welcome(load('time', 'hangang', 'dimibob')).catch(handler)
+  results.forEach(res => {
+    if (res.powerline) powerlines.push(res.powerline)
+    if (res.command) logs.push(...command(res.command), '')
+  })
+
+  ;[powerline(powerlines), ...logs.slice(0, -1)].forEach(log => console.log(log))
+}

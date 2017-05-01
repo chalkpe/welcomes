@@ -4,10 +4,8 @@ const path = require('path')
 const axios = require('axios')
 const moment = require('moment')
 
-const url = 'http://dimigo.in/pages/dimibob_getdata.php'
-const file = path.resolve(__dirname, '..', 'assets', 'favorites.txt')
-
-const fields = 'breakfast lunch dinner snack'.split(' ')
+const defaultServer = 'http://dimigo.in/pages/dimibob_getdata.php'
+const fields = ['breakfast', 'lunch', 'dinner', 'snack']
 const mealTypes = Object.assign({}, ...fields.map(meal => ({ [meal]: meal })))
 
 const getMeal = time =>
@@ -16,33 +14,50 @@ const getMeal = time =>
   : time <= 1950 ? mealTypes.dinner
   : time <= 2140 ? mealTypes.snack : null
 
-module.exports = async options => {
-  let [now, meal] = [moment()]
-  const flags = [meal = getMeal(now.hours() * 100 + now.minutes())]
+module.exports = async argv => {
+  const [now, flags] = [moment(), []]
+  let meal = getMeal(now.hours() * 100 + now.minutes())
 
-  if (!meal) {
+  if (meal) {
+    if (argv.my.ignoreSnack && meal === mealTypes.snack) return {}
+
+    flags.push(meal)
+  } else {
+    if (argv.my.onlyToday) return {}
+
     now.add(1, 'day')
-    flags.push('tomorrow', meal = mealTypes.breakfast)
+    flags.push(meal = mealTypes.breakfast, 'tomorrow')
   }
 
-  const params = { d: now.format('YYYYMMDD') }
-  const myOptions = Object.assign(options, { params })
+  const options = {
+    method: 'get',
+    timeout: argv.timeout || 0,
+    url: argv.my.server || defaultServer,
+    params: { d: now.format(argv.my.paramFormat || 'YYYYMMDD') }
+  }
 
-  const { data } = await axios.get(url, myOptions)
+  const { data } = await axios(options)
   if (typeof data !== 'object' || !data[meal]) throw new Error('not found')
 
+  const commandOptions = {}
   const list = data[meal].split(/[ */]/).filter(x => x)
-  const favorites = (await fs.readFile(file, 'utf-8'))
-    .split(os.EOL).map(item => item.trim()).filter(x => x)
+
+  if (argv.my.likes) {
+    const file = path.resolve(argv.my.likes)
+    const encoding = argv.my.encoding || 'utf-8'
+    const list = (await fs.readFile(file, encoding)).split(os.EOL)
+    commandOptions.highlight = list.map(item => item.trim()).filter(x => x)
+  }
 
   const command = {
-    input: 'dimibob',
+    input: argv.my.cmd || 'dimibob',
     output: { table: [list, Math.ceil(list.length / 2)] },
-
-    params: [params.d],
+    params: [options.params.d],
     flags: flags.filter(x => x),
-    options: { highlight: favorites }
+    options: commandOptions
   }
 
   return { command }
 }
+
+module.exports.pluginName = 'dimibob'
