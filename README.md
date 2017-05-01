@@ -139,7 +139,6 @@ $ welcomes --config welcomes.json
 [Main screenshot]: http://i.imgur.com/Yu9YI4k.png
 [Usage screenshot]: http://i.imgur.com/sFkgZSh.png
 
-[npm]:
 [npm version]: https://img.shields.io/npm/v/welcomes.svg
 [npm downloads]: https://img.shields.io/npm/dt/welcomes.svg
 
