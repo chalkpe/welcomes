@@ -8,6 +8,14 @@ Welcome message for shells
 $ npm install -g welcomes
 ```
 
+## Usage
+Add `welcomes --config config.json`
+or `welcomes time hangang custom-a custom-b --configs`
+to your [run commands](https://en.wikipedia.org/wiki/Run_commands) file (`.bashrc`, `.bash_profile` or `.zshrc` etc.)
+
+* Pre-installed plugins: `time`, `hangang`, `dimibob`
+* `custom-a` is short for `welcomes-plugin-custom-a` npm package
+
 ## Configuration
 
 ### Basic
