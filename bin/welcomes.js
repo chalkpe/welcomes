@@ -31,13 +31,12 @@ const getArgv = async () => {
   const encoding = argv.encoding || 'utf-8'
   const config = JSON.parse(await fs.readFile(argv.config, encoding))
 
-  console.log(config)
-
   return Object.assign({}, argv, config)
 }
 
 async function main () {
   const argv = await getArgv()
+  if (argv.verbose) console.log(argv)
 
   return Promise.map(argv._, requirePlugin)
     .then(plugins => loadPlugins(argv, plugins))
