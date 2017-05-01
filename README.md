@@ -1,4 +1,4 @@
-# welcomes [![CircleCI]](https://circleci.com/gh/ChalkPE/welcomes) [![JavaScript Style Guide]](https://standardjs.com)
+# welcomes [![CircleCI]](https://circleci.com/gh/ChalkPE/welcomes) [![npm version]](https://www.npmjs.com/package/welcomes) [![npm downloads]](https://www.npmjs.com/package/welcomes) [![JavaScript Style Guide]](https://standardjs.com)
 Welcome message for shells
 
 ![Main screenshot]
@@ -43,7 +43,7 @@ to your [run commands](https://en.wikipedia.org/wiki/Run_commands) file (`.bashr
 | `onlyToday` <br> -> `boolean` | `true`일 경우 21시 40분부터 자정까지는 아무 것도 출력하지 않습니다. <br> `false`일 경우 21시 40분부터 익일 8시 45분까지 **다음 아침 메뉴**를 출력합니다. | `false` |
 | `cmd` <br> -> `string` | 출력할 명령어 이름 | `'dimibob'` |
 | `cmdFormat` <br> -> `string` | 출력할 명령어 인자의 날짜 포맷 ([`moment` 문서 참고][Moment format]) | `'dimibob'` |
-| `likes` <br> -> `string` | 좋아하는 급식 리스트의 경로 (`\n`으로 구분) <br> `null`이 아닐 경우 해당되는 메뉴의 텍스트가 강조됨. | `null` |
+| `likes` <br> -> `string` | 좋아하는 급식 리스트 ([예시](https://gist.github.com/ChalkPE/caa1bc049d99bb178a2fde65c5946db4)) 파일의 경로 <br> `null`이 아닐 경우 해당되는 메뉴의 텍스트가 강조됨. | `null` |
 | `likesColor` <br> -> `string` | `likes`가 `null`이 아닐 경우에만 필요 <br> 좋아하는 메뉴 텍스트의 강조 스타일 ([`chalk` 문서 참고][Chalk styles]). | `'blue'` |
 | `server` <br> -> `string` | 디미고 급식 API의 주소. <br> URL 파리미터 `d`로 날짜를 지정할 수 있어야 함. | [여기][Dimibob server] |
 | `paramFormat` <br> -> `string` | URL 파리미터 `d`의 날짜 포맷 ([`moment` 문서 참고][Moment format]) | `'YYYYMMDD'` |
@@ -138,5 +138,10 @@ $ welcomes --config welcomes.json
 
 [Main screenshot]: http://i.imgur.com/Yu9YI4k.png
 [Usage screenshot]: http://i.imgur.com/sFkgZSh.png
+
+[npm]:
+[npm version]: https://img.shields.io/npm/v/welcomes.svg
+[npm downloads]: https://img.shields.io/npm/dt/welcomes.svg
+
 [CircleCI]: https://circleci.com/gh/ChalkPE/welcomes.svg?style=svg
 [JavaScript Style Guide]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
