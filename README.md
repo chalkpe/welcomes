@@ -1,7 +1,11 @@
-# welcome.js [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+# welcome.js [![CircleCI]](https://circleci.com/gh/ChalkPE/welcome.js) [![JavaScript Style Guide]](https://standardjs.com)
 Welcome message for shells
 
-![Screenshot](http://i.imgur.com/DPzwll8.png)
+![Screenshot]
 
 ## License
 [MIT License](LICENSE)
+
+[Screenshot]: http://i.imgur.com/DPzwll8.png
+[CircleCI]: https://circleci.com/gh/ChalkPE/welcome.js.svg?style=svg
+[JavaScript Style Guide]: https://img.shields.io/badge/code_style-standard-brightgreen.svg

@@ -1,7 +1,11 @@
+const os = require('os')
+const fs = require('mz/fs')
+const path = require('path')
 const axios = require('axios')
 const moment = require('moment')
-const table = require('../table')
-const URL = 'http://dimigo.in/pages/dimibob_getdata.php'
+
+const url = 'http://dimigo.in/pages/dimibob_getdata.php'
+const file = path.resolve(__dirname, '..', 'assets', 'favorites.txt')
 
 const fields = 'breakfast lunch dinner snack'.split(' ')
 const mealTypes = Object.assign({}, ...fields.map(meal => ({ [meal]: meal })))
@@ -24,15 +28,21 @@ module.exports = async options => {
   const params = { d: now.format('YYYYMMDD') }
   const myOptions = Object.assign(options, { params })
 
-  const { data } = await axios.get(URL, myOptions)
+  const { data } = await axios.get(url, myOptions)
   if (typeof data !== 'object' || !data[meal]) throw new Error('not found')
 
-  const meals = data[meal].split(/[ */]/)
+  const list = data[meal].split(/[ */]/).filter(x => x)
+  const favorites = (await fs.readFile(file, 'utf-8'))
+    .split(os.EOL).map(item => item.trim()).filter(x => x)
 
-  return { command: {
+  const command = {
     input: 'dimibob',
+    output: { table: [list, Math.ceil(list.length / 2)] },
+
     params: [params.d],
     flags: flags.filter(x => x),
-    output: table(meals, Math.ceil(meals.length / 2))
-  } }
+    options: { highlight: favorites }
+  }
+
+  return { command }
 }
