@@ -1,6 +1,6 @@
 {
   "name": "welcomes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Welcome message for shells",
   "main": "index.js",
   "scripts": {

@@ -38,7 +38,7 @@ module.exports = async argv => {
   }
 
   const { data } = await axios(options)
-  if (typeof data !== 'object' || !data[meal]) throw new Error('not found')
+  if (typeof data !== 'object' || !data[meal]) return {}
 
   const highlights = []
   const list = data[meal].split(/[ */]/).filter(x => x)

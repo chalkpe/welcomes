@@ -12,7 +12,7 @@ module.exports = async argv => {
   }
 
   let { data } = await axios(options)
-  if (typeof data !== 'object') throw new Error()
+  if (!(typeof data === 'object' && 'temp' in data)) return {}
 
   const temp = parseFloat(data.temp)
   const powerline = {
