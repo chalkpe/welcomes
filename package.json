@@ -35,7 +35,7 @@
     "axios": "^0.16.2",
     "bluebird": "^3.5.0",
     "chalk": "^1.1.3",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.2",
     "moment": "^2.19.3",
     "mz": "^2.6.0",
     "open-exchange-rates": "^0.3.0"
